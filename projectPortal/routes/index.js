@@ -5,6 +5,6 @@ const bcrypt = require('bcryptjs');
 const router = express.Router();
 
 require('../models/users');
-const User = mongoose.model('User');
+const User = mongoose.model('User'); 
 
 module.exports = router;

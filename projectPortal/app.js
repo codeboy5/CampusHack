@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+const path = require('path');
 
 
 const keys = require('./config/keys');
@@ -14,8 +16,42 @@ require('./models/users');
 const User = mongoose.model('User');
 
 const app = express();
+const store = new MongoDBStore({
+    uri: keys.mongoUrl,
+    collection: 'sessions'
+});
 
 app.use(bodyParser.urlencoded({extended:'true'}));
+// app.use(express.static(__dirname,'public'));
+app.use(express.static(path.join(__dirname,'public')));
+app.use(session({
+    store: store,
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use((req,res,next)=>{
+    if(!req.session.user){
+        return next();
+    }
+    User.findById(req.session.user._id)
+    .then(user => {
+        req.user = user;
+        next();
+    })
+    .catch(err => {
+        console.log(err);
+    });
+});
+
+app.use((req,res,next) => {
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    next();
+});
+
+app.set('view engine','ejs');
+app.set('views','views');
 
 // app.post('/auth/register',(req,res,next)=>{
 //     const newUser = {
@@ -35,6 +71,9 @@ app.use(bodyParser.urlencoded({extended:'true'}));
 //         console.log(err);
 //     });
 // });
+app.get('/',(req,res,next)=>{
+    res.render('index');
+});
 app.use('/auth',authRoutes);
 app.use('/projectportal',projectPortalRoutes);
 
