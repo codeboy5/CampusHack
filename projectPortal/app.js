@@ -12,6 +12,8 @@ const projectPortalRoutes = require('./routes/projectPortalRoutes');
 const indexRoutes = require('./routes/index');
 const authRoutes = require('./routes/authRoutes');
 
+const isAuth = require('./helpers/isAuth');
+
 require('./models/users');
 const User = mongoose.model('User');
 
@@ -75,7 +77,7 @@ app.get('/',(req,res,next)=>{
     res.render('index');
 });
 app.use('/auth',authRoutes);
-app.use('/projectportal',projectPortalRoutes);
+app.use('/projectportal',isAuth,projectPortalRoutes);
 
 mongoose.connect(keys.mongoUrl)
 .then(res =>{

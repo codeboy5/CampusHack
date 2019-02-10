@@ -15,11 +15,30 @@
   </head>
 
   <body class="text-center">
-    <form class="form-signin">
-      <label for="inputName" class="sr-only">Name</label>
-      <input type="text" id="inputName" class="form-control" placeholder="Project Name" required>
-      <label for="inputDescription" class="sr-only">Description</label>
-      <input type="text" id="inputDescription" class="form-control" placeholder="Project Description" required>
+    <form class="form-signin" method="POST" action="/projectportal/addproject">
+      <label for="inputName" class="sr-only">Project Name</label>
+      <input type="text" id="inputName" class="form-control" placeholder="Project Name" name="name" required>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Project Description</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+          <label for="department">Project Department</label>
+          <select class="form-control" id="department" name="department">
+            <option  id="option">Computer Science</option>
+            <option  id="option">Electrical</option>
+            <option  id="option">Chemical </option>
+            <option  id="option">Mechanical</option>
+            <option  id="option">Biotechnology</option>
+          </select>
+      </div>
+      <div class="form-group">
+          <label for="projectBy">Project By</label>
+          <select class="form-control" id="projectBy" name="projectBy">
+            <option id="option">Professor</option>
+            <option id="option">Student</option>
+          </select>
+      </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Add Project</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
     </form>

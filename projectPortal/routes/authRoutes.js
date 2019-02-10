@@ -15,6 +15,13 @@ router.get('/register',(req,res,next)=>{
     res.render('auth/register');
 });
 
+router.get('/logout',(req,res,next)=>{
+    req.session.destroy(err => {
+        console.log(err);
+        res.redirect('/');
+    });
+});
+
 router.post('/register',(req,res,next)=>{
     const newUser = {
         email: req.body.email,
