@@ -28,10 +28,14 @@
 </head>
 
 <body class="text-center">
-    <form class="form-signin" method="POST" action="/projectportal/additem">
+    <form class="form-signin" method="POST" action="/lostandfound/additem">
         <div class="form-group">
             <label for="inputName">Item Name</label>
             <input type="text" id="inputName" class="form-control" placeholder="Project Name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="inputLast">Last Seen</label>
+            <input type="text" id="inputLast" class="form-control" placeholder="Project Name" name="lastseen" required>
         </div>
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Item Description</label>
@@ -39,7 +43,8 @@
         </div>
         <div class="form-group">
             <label for="location">Location</label>
-            <input type="text" id="location" class="form-control" placeholder="(Mark On The Map)" name="location" required>
+            <input type="text" id="location" class="form-control" placeholder="(Mark On The Map)" name="location"
+                required>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Add Project</button>
         <p class="mt-5 mb-3 text-muted" style="color:white;">&copy; 2018-2019</p>

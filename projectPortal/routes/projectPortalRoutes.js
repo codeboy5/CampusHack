@@ -89,44 +89,6 @@ router.get('/project/:id',(req,res,next)=>{
     });
 });
 
-router.get('/index',(req,res,next)=>{
-    const location = [];
-    Item.find()
-    .then(items => {
-        for(let item of items){
-            location.push(item.location)
-        }
-        // console.log(location);
-        res.render('lostandfound/homepage',{location:location});
-    })
-    .catch(err => {
-        console.log(err);
-    });
-});
-
-router.get('/additem',(req,res,next)=>{
-    res.render('lostandfound/additem')
-});
-
-router.post('/additem',(req,res,next)=>{
-
-    const newItem = {
-        name: req.body.name,
-        description: req.body.description,
-        location: req.body.location
-    }
-
-    new Item(newItem)
-    .save()
-    .then(result => {
-        console.log(result);
-        res.send('Project Added to The Database');
-    })
-    .catch(err => {
-        console.log(err);
-    });
-});
-
 // router.post('/filter',(req,res,next)=>{
 //     console.log(req.body.department)
 //     Project.find({

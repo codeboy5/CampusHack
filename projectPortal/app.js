@@ -9,6 +9,7 @@ const path = require('path');
 const keys = require('./config/keys');
 
 const projectPortalRoutes = require('./routes/projectPortalRoutes');
+const lostAndFoundRoutes = require('./routes/lostAndFound');
 const indexRoutes = require('./routes/index');
 const authRoutes = require('./routes/authRoutes');
 
@@ -74,10 +75,22 @@ app.set('views','views');
 //     });
 // });
 app.get('/',(req,res,next)=>{
-    res.render('index');
+    const user = {}
+    if(req.session.isLoggedIn){
+        User.findById(req.user._id)
+        .then(u => {
+           res.render('index',{user:u})
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    } else {
+        res.render('index',{user:''});
+    }
 });
 app.use('/auth',authRoutes);
 app.use('/projectportal',isAuth,projectPortalRoutes);
+app.use('/lostandfound',isAuth,lostAndFoundRoutes)
 
 mongoose.connect(keys.mongoUrl)
 .then(res =>{

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Google Maps</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #map {
+            height: 500px;
+            width: 80%;
+            margin: 50px;
+            margin-left: 150px;
+        }
+
+        body {
+            background-color: #333;
+        }
+        .t{
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">CampusHack</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/lostandfound">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/lostandfound/additem">Lost An Item?</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="map">
+
+    </div>
+
+    <table class="table table-dark t">
+        <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Description</th>
+                <th scope="col">Last Seen</th>
+                <th scope="col">Owner</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <%= item.name %>
+                </td>
+                <td>
+                    <%= item.description %>
+                </td>
+                <td>
+                    <%= item.lastSeen %>
+                </td>
+                <td> <a href="mailto:<%= item.owner.email %>"> Contact Owner </a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function initMap() {
+
+            const location = '<%= location %>'
+            const locOne = location.slice(1, -1);
+            const locTwo = locOne.split(',');
+            const lati = parseFloat(locTwo[0]);
+            const longi = parseFloat(locTwo[1]);
+            console.log(lati, longi)
+
+            var options = {
+                zoom: 16,
+                center: {
+                    lat: lati,
+                    lng: longi
+                }
+            }
+
+            var map = new google.maps.Map(document.getElementById('map'), options);
+
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: lati,
+                    lng: longi
+                },
+                map: map,
+            });
+        }
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlIJ74rskk_nQWTxZLCDV1gm4se_O4SAw&callback=initMap">
+    </script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script>
+        window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+    </script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

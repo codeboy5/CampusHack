@@ -10,7 +10,12 @@ const itemSchema = new Schema({
         type: String,
         required: true
     },
-    location: String
+    location: String,
+    lastSeen: String,
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 mongoose.model('Item',itemSchema);

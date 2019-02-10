@@ -1,111 +1,77 @@
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Signin</title>
+  <title>Jumbotron Template for Bootstrap</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="/css/signin.css" rel="stylesheet">
-
-    <style>
-        body {
-            background-color: #333;
-            color: white;
-        }
-
-        #map {
-            width: 50%;
-            height: 600px;
-            margin-right: 50px
-        }
-    </style>
+  <!-- Custom styles for this template -->
+  <link href="/css/jumbotron.css" rel="stylesheet">
 </head>
 
-<body class="text-center">
+<body>
 
-   
-        <table class="table table-striped table-dark" style="margin:20px">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
-
-    <div id="map">
-
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">CampusHack</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/lostandfound">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/lostandfound/additem">Lost An Item?</a>
+        </li>
+      </ul>
     </div>
+  </nav>
 
+  <h2 style="color:white;" class="m-3">List Of Items</h1>
+
+    <table class="table table-striped table-dark" style="margin:20px;">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Last Seen</th>
+          <th scope="col">Know More</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let item of items) {%>
+        <tr>
+          <td> <%= item.name %> </td>
+          <td> <%= item.lastSeen %> </td>
+          <td class="text-success"> <a href="/lostandfound/item/<%= item._id %>" class="btn btn-success">Know More</a> </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <footer class="container">
+      <p style="color:white">&copy; Company 2018-2019</p>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
     <script>
-        function initMap() {
-
-            var options = {
-                zoom: 16,
-                center: {
-                    lat: 28.54752909472491,
-                    lng: 77.18700650813423
-                }
-            }
-
-            var map = new google.maps.Map(document.getElementById('map'), options);
-
-            var marker = new google.maps.Marker({
-                position: {
-                    lat: 28.5430,
-                    lng: 77.1938
-                },
-                map: map,
-                // icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-            });
-
-            const location = '<%= location %>'
-            
-        }
+      window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
     </script>
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlIJ74rskk_nQWTxZLCDV1gm4se_O4SAw&callback=initMap">
-    </script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 </body>
 
 </html>
-
-const afterBracketRemove = location.slice(1, location.length - 1);
-console.log(afterBracketRemove.split(','));
-
-var marker = new google.maps.Marker({
-    position: {
-        lat: parseFloat(afterBracketRemove.split(',')[0]),
-        lng: parseFloat(afterBracketRemove.split(',')[1])
-    },
-    map: map,
-});
