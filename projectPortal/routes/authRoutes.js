@@ -37,7 +37,7 @@ router.post('/register',(req,res,next)=>{
     })
     .then(()=>{
         console.log('User Was Registered');
-        res.send('User Was Registered');
+        res.redirect('/auth/login');
     })
     .catch(err => {
         console.log(err);

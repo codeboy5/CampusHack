@@ -6,6 +6,9 @@ const router = express.Router();
 require('../models/projects');
 const Project = mongoose.model('Project');
 
+require('../models/items');
+const Item = mongoose.model('Item');
+
 router.get('/',(req,res,next)=>{
     Project.find({},['name','description'])
     .sort([['createdAt',-1]])
@@ -21,6 +24,19 @@ router.get('/addproject',(req,res,next)=>{
     res.render('projectportal/addproject');
 });
 
+router.get('/interested/:id',(req,res,next)=>{
+    Project.findById(req.params.id)
+    .then(p => {
+        return p.addPeopleInterested(req.user._id)
+    })
+    .then(result => {
+        res.redirect('/projectportal');
+    })
+    .catch(err => {
+        console.log(err);
+    });
+});
+
 router.post('/addproject',(req,res,next)=>{
     const newProject = {
         name: req.body.name,
@@ -33,14 +49,34 @@ router.post('/addproject',(req,res,next)=>{
     .save()
     .then((result) => {
         console.log('Project Added to the database');
-        res.send('Project Added to the database');
+        res.redirect('/projectportal')
     }).catch((err) => {
         console.log(err);
     });
 });
 
 router.get('/myprojects',(req,res,next)=>{
-    res.render('projectportal/myprojects');
+    Project.find({
+        author: req.user._id
+    })
+    .then(projects => {
+        res.render('projectportal/myprojects',{projects:projects});
+    })
+    .catch(err => {
+        console.log(err);
+    });
+});
+
+router.get('/projectsInterested',(req,res,next)=>{
+    Project.find({
+        peopleInterested: req.user._id
+    })
+    .then(projects => {
+        res.render('projectportal/myprojects',{projects:projects});
+    })
+    .catch(err => {
+        console.log(err);
+    });
 });
 
 router.get('/project/:id',(req,res,next)=>{
@@ -53,8 +89,42 @@ router.get('/project/:id',(req,res,next)=>{
     });
 });
 
+router.get('/index',(req,res,next)=>{
+    const location = [];
+    Item.find()
+    .then(items => {
+        for(let item of items){
+            location.push(item.location)
+        }
+        // console.log(location);
+        res.render('lostandfound/homepage',{location:location});
+    })
+    .catch(err => {
+        console.log(err);
+    });
+});
+
 router.get('/additem',(req,res,next)=>{
     res.render('lostandfound/additem')
+});
+
+router.post('/additem',(req,res,next)=>{
+
+    const newItem = {
+        name: req.body.name,
+        description: req.body.description,
+        location: req.body.location
+    }
+
+    new Item(newItem)
+    .save()
+    .then(result => {
+        console.log(result);
+        res.send('Project Added to The Database');
+    })
+    .catch(err => {
+        console.log(err);
+    });
 });
 
 // router.post('/filter',(req,res,next)=>{

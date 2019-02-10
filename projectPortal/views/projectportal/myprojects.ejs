@@ -52,23 +52,14 @@
         </tr>
       </thead>
       <tbody>
+        <% for(let project of projects) {%>
         <tr>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+          <td> <%= project.name %> </td>
+          <td> <%= project.description %> </td>
+          <td> <%= project.peopleInterested.length %> </td>
           <td class="text-success">Open</td>
         </tr>
-        <tr>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td class="text-danger">Close</td>
-        </tr>
-        <tr>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        <% } %>
       </tbody>
     </table>
 

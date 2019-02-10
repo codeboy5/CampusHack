@@ -34,7 +34,7 @@
             <p class="card-text"><%= project.description %></p>
             <p class="card-text"><%= project.department %></p>
             <p class="Department"><%= project.projectBy %></p>
-            <a href="#" class="btn btn-primary">Interested</a>
+            <a href="/projectportal/interested/<%= project._id %>" class="btn btn-primary">Interested</a>
         </div>
         <div class="card-footer text-muted">
             <%= project.createdAt %>
