@@ -53,6 +53,10 @@ router.get('/project/:id',(req,res,next)=>{
     });
 });
 
+router.get('/additem',(req,res,next)=>{
+    res.render('lostandfound/additem')
+});
+
 // router.post('/filter',(req,res,next)=>{
 //     console.log(req.body.department)
 //     Project.find({
