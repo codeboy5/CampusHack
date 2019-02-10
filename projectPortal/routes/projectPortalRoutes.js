@@ -13,7 +13,6 @@ router.get('/',(req,res,next)=>{
         if(err){
             console.log(err);
         }
-        console.log(projects);
         res.render('projectportal/index',{projects:projects});
     });
 });
@@ -40,10 +39,13 @@ router.post('/addproject',(req,res,next)=>{
     });
 });
 
+router.get('/myprojects',(req,res,next)=>{
+    res.render('projectportal/myprojects');
+});
+
 router.get('/project/:id',(req,res,next)=>{
     Project.findById(req.params.id)
     .then(project => {
-        console.log(project);
         res.render('projectportal/project',{project:project});
     })
     .catch(err => {
