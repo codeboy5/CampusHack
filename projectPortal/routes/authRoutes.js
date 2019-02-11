@@ -60,7 +60,7 @@ router.post('/login',(req,res,next)=>{
         .then(isMatch => {
             if(!isMatch) {
                 console.log('Password Does Not Match');
-                res.send('Password Does Not Match');
+                res.redirect('/auth/login')
             }
             req.session.isLoggedIn = true;
             req.session.user = user;

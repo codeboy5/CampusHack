@@ -24,9 +24,11 @@ const store = new MongoDBStore({
     collection: 'sessions'
 });
 
-app.use(bodyParser.urlencoded({extended:'true'}));
+app.use(bodyParser.urlencoded({
+    extended: 'true'
+}));
 // app.use(express.static(__dirname,'public'));
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     store: store,
     secret: 'secret',
@@ -34,27 +36,27 @@ app.use(session({
     saveUninitialized: false
 }));
 
-app.use((req,res,next)=>{
-    if(!req.session.user){
+app.use((req, res, next) => {
+    if (!req.session.user) {
         return next();
     }
     User.findById(req.session.user._id)
-    .then(user => {
-        req.user = user;
-        next();
-    })
-    .catch(err => {
-        console.log(err);
-    });
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 
-app.use((req,res,next) => {
+app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
     next();
 });
 
-app.set('view engine','ejs');
-app.set('views','views');
+app.set('view engine', 'ejs');
+app.set('views', 'views');
 
 // app.post('/auth/register',(req,res,next)=>{
 //     const newUser = {
@@ -74,29 +76,33 @@ app.set('views','views');
 //         console.log(err);
 //     });
 // });
-app.get('/',(req,res,next)=>{
+app.get('/', (req, res, next) => {
     const user = {}
-    if(req.session.isLoggedIn){
+    if (req.session.isLoggedIn) {
         User.findById(req.user._id)
-        .then(u => {
-           res.render('index',{user:u})
-        })
-        .catch(err => {
-            console.log(err);
-        });
+            .then(u => {
+                res.render('index', {
+                    user: u
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            });
     } else {
-        res.render('index',{user:''});
+        res.render('index', {
+            user: ''
+        });
     }
 });
-app.use('/auth',authRoutes);
-app.use('/projectportal',isAuth,projectPortalRoutes);
-app.use('/lostandfound',isAuth,lostAndFoundRoutes)
+app.use('/auth', authRoutes);
+app.use('/projectportal', isAuth, projectPortalRoutes);
+app.use('/lostandfound', isAuth, lostAndFoundRoutes)
 
 mongoose.connect(keys.mongoUrl)
-.then(res =>{
-    console.log('Connected To Mongoose');
-    const port = process.env.PORT || 3000;
-    app.listen(3000,()=>{
-        console.log(`Server Started On Port ${port}`);
+    .then(res => {
+        console.log('Connected To Mongoose');
+        const port = process.env.PORT || 3000;
+        app.listen(3000, () => {
+            console.log(`Server Started On Port ${port}`);
+        });
     });
-});
