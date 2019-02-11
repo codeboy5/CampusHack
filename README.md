@@ -1,5 +1,14 @@
 # CampusHack
 
+**To MAKE THE PORTAL WORK**
+
+DO THE FOLLOWING THINGS:
+```
+add a mongoDB url in the projectportal/config/keys.js
+add a SendGrid Api Key in the projectportal/config/keys.js
+add a google maps api key wherever the same is used(the one in code is invalid"
+```
+
 ## WebPortal For The CampusHack Hackathon
 
 **This webportal Consists of Two Major Applications**
