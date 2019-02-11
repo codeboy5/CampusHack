@@ -26,4 +26,5 @@
 ##### Features
 - Report Lost Items 
 - Mark the exact location using Google Maps Api
+- Contact Owner or send an email to the owner with just one click 
 
