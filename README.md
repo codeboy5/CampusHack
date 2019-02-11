@@ -11,6 +11,7 @@
 
 ##### Features
 - Signup and Login
+- Password Encryption
 - Post Projects
 - Browse Through Projects Posted by Other People
 - Apply For Projects
